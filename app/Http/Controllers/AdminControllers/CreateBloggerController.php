@@ -127,7 +127,7 @@ class CreateBloggerController extends Controller
     {
         if (BloggerReg::where('id',$id)->first() != null)
         {
-            $bloggerStore = Blogger::where('id',$id)->first();
+            $bloggerStore = Blogger::where('bid',$id)->first();
             $bloggerStore->is_approved = 1;
 
             if ($bloggerStore->save())

@@ -115,7 +115,8 @@ Route::prefix('blogger')->middleware(['auth:blogger'])->group(function(){
 
     Route::middleware('isapproved')->group(function(){
         /* Blog Creation Process */
-        Route::match(['get','post'],'/step-1', [App\Http\Controllers\AdminControllers\BlogCreationController::class, 'step1'])->name('blogger.blog.create.step1');
+        Route::match(['get','post'],'setup/blog/step-1', [App\Http\Controllers\BloggerControllers\BlogCreationController::class, 'step1'])->name('blogger.blog.create.step1');
+        Route::match(['get','post'],'setup/blog/step-2', [App\Http\Controllers\BloggerControllers\BlogCreationController::class, 'step2'])->name('blogger.blog.create.step2');
 
 
         Route::get('/dashboard', [App\Http\Controllers\BloggerController::class, 'index'])->name('blogger.dashboard');

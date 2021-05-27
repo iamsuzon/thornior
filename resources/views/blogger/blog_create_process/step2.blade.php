@@ -16,13 +16,13 @@
 
                     <div class="card">
                         <div class="card-header">
-                            <h5>Step 1 of 4</h5>
+                            <h5>Step 2 of 4</h5>
                         </div>
                         <div class="card-body">
-                            <h3>Blog name</h3>
-                            <form action="{{route('blogger.blog.create.step1')}}" method="POST">
+                            <h3>Blog Region</h3>
+                            <form action="{{route('blogger.blog.create.step2')}}" method="POST">
                                 @csrf
-                                <input type="text" class="form-control" placeholder="Blog Name" name="blog_name">
+                                @include('layouts.countries')
                                 <br>
                                 <button class="btn btn-success" type="submit">Next</button>
                             </form>
