@@ -14,18 +14,18 @@
                             </div>
                         @endif
 
-                        {{ __('You are logged in!') }}
-
                         <div class="card">
+                            <div class="card-header">
+                                <h5>Step 4 of 4</h5>
+                            </div>
                             <div class="card-body">
-
-                                <li>
-                                    <a href="{{route('blogger.settings.profile')}}">Create Single Blog Post</a>
-                                </li>
-                                <li>
-                                    <a href="{{route('blogger.settings.profile')}}">Settings</a>
-                                </li>
-
+                                <h3>Click to complete the blog setup</h3>
+                                <form action="{{route('blogger.blog.create.final')}}" method="POST">
+                                    @csrf
+                                    <input type="hidden" value="finish" name="finish">
+                                    <br>
+                                    <button class="btn btn-success" type="submit">Finish</button>
+                                </form>
                             </div>
                         </div>
                     </div>

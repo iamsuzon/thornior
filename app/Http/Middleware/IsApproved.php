@@ -19,7 +19,7 @@ class IsApproved
      */
     public function handle(Request $request, Closure $next)
     {
-        if($this->findUser() == null)
+        if($this->findUser() == 0)
         {
             if (Auth::guard('web')->check() == true)
             {
@@ -40,7 +40,7 @@ class IsApproved
             return $user->user_approved_at;
         }
         else{
-            $blogger = Blogger::findOrFail(Auth::id());
+            $blogger = Blogger::findOrFail(Auth::guard('blogger')->id());
             return $blogger->is_approved;
         }
 

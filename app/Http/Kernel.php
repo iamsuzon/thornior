@@ -64,5 +64,7 @@ class Kernel extends HttpKernel
         'verified' => \Illuminate\Auth\Middleware\EnsureEmailIsVerified::class,
         'isapproved' => \App\Http\Middleware\IsApproved::class,
         'checkinvitetoken' => \App\Http\Middleware\CheckInviteToken::class,
+        'hasblog' => \App\Http\Middleware\HasBlog::class,
+        'hasblog_nosetup' => \App\Http\Middleware\HasBlogNoSetup::class,
     ];
 }

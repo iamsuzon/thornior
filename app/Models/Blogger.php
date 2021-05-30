@@ -16,7 +16,7 @@ class Blogger extends Authenticatable
     protected $guard = 'blogger';
 
     protected $fillable = [
-        'name', 'email', 'password','role','is_approved'
+        'name', 'email', 'password','about','region','role','is_approved','has_blog'
     ];
 
     protected $hidden = [

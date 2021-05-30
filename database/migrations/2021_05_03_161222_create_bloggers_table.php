@@ -19,6 +19,8 @@ class CreateBloggersTable extends Migration
             $table->string('name');
             $table->string('email');
             $table->string('password');
+            $table->longText('about')->nullable();
+            $table->string('region')->nullable();
             $table->integer('role_id');
             $table->integer('is_approved')->default(0);
             $table->integer('has_blog')->default(0);

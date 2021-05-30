@@ -110,16 +110,35 @@ Route::prefix('blogger')->group(function(){
 
 /* Blogger Dashboard */
 Route::prefix('blogger')->middleware(['auth:blogger'])->group(function(){
+    Route::get('/', function (){
+       return redirect()->route('blogger.dashboard');
+    });
+
     /* If Blogger Not Approved */
     Route::get('/approve', [App\Http\Controllers\Auth\UserEmailVerificationController::class, 'notApprove'])->name('blogger.notapprove');
 
     Route::middleware('isapproved')->group(function(){
+
         /* Blog Creation Process */
-        Route::match(['get','post'],'setup/blog/step-1', [App\Http\Controllers\BloggerControllers\BlogCreationController::class, 'step1'])->name('blogger.blog.create.step1');
-        Route::match(['get','post'],'setup/blog/step-2', [App\Http\Controllers\BloggerControllers\BlogCreationController::class, 'step2'])->name('blogger.blog.create.step2');
+        Route::middleware('hasblog_nosetup')->group(function (){
+            Route::match(['get','post'],'setup/blog/step-1', [App\Http\Controllers\BloggerControllers\BlogCreationController::class, 'step1'])->name('blogger.blog.create.step1');
+            Route::match(['get','post'],'setup/blog/step-2', [App\Http\Controllers\BloggerControllers\BlogCreationController::class, 'step2'])->name('blogger.blog.create.step2');
+            Route::match(['get','post'],'setup/blog/step-3', [App\Http\Controllers\BloggerControllers\BlogCreationController::class, 'step3'])->name('blogger.blog.create.step3');
+            Route::match(['get','post'],'setup/blog/step-4', [App\Http\Controllers\BloggerControllers\BlogCreationController::class, 'step4'])->name('blogger.blog.create.step4');
+            Route::match(['get','post'],'setup/blog/final', [App\Http\Controllers\BloggerControllers\BlogCreationController::class, 'final'])->name('blogger.blog.create.final');
+        });
 
+        /* Dashboard */
+        Route::middleware('hasblog')->group(function(){
+            Route::get('/dashboard', [App\Http\Controllers\BloggerControllers\BloggerController::class, 'index'])->name('blogger.dashboard');
 
-        Route::get('/dashboard', [App\Http\Controllers\BloggerController::class, 'index'])->name('blogger.dashboard');
+            /* Post */
+            Route::get('/blog/post', [App\Http\Controllers\BloggerControllers\BloggerController::class, 'settingsProfileShow'])->name('blogger.settings.profile');
+
+            /* Settings */
+            Route::get('/settings/profile', [App\Http\Controllers\BloggerControllers\BloggerController::class, 'settingsProfileShow'])->name('blogger.settings.profile');
+            Route::post('/settings/profile', [App\Http\Controllers\BloggerControllers\BloggerController::class, 'settingsProfileSubmit'])->name('blogger.settings.profile.submit');
+        });
     });
 
     /* Logout */
