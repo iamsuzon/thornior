@@ -19,6 +19,7 @@ class CreateAdminsTable extends Migration
             $table->string('email');
             $table->string('password');
             $table->string('role');
+            $table->string('image')->nullable()->default('admin_avatar.jpg');
             $table->rememberToken();
             $table->timestamps();
             $table->softDeletes();

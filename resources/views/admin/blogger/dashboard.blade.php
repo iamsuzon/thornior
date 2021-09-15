@@ -45,7 +45,10 @@
                                             @if($blogger->account_status == 1)
                                                 <a class="btn btn-success btn-sm" href="{{route('admin.blogger.account.giveapproval',$blogger->id)}}">Approve</a>
                                             @else
-                                                <a class="btn btn-secondary btn-sm disabled" href="#">Link Sent</a>
+                                                <div class="btn-group">
+                                                    <a class="btn btn-secondary btn-sm disabled" href="#">Link Sent</a>
+                                                    <a class="btn btn-primary btn-sm" href="{{route('admin.blogger.sent.again',$blogger->email)}}">Send Again</a>
+                                                </div>
                                             @endif
                                         </td>
                                     </tr>

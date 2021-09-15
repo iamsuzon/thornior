@@ -13,6 +13,10 @@ class BlogCreationController extends Controller
     public function step1(Request $request)
     {
         if ($request->blog_name != null) {
+            if (AllBlogs::where('blog_name',trim($request->blog_name))->exists() == true)
+            {
+                return back()->with('warning','The Blog Name is Already Taken');
+            }
             setcookie("blog_name", $request->blog_name, time() + 30 * 24 * 60 * 60);
             return redirect(route('blogger.blog.create.step2'));
         }
@@ -52,13 +56,18 @@ class BlogCreationController extends Controller
             $create_blog = new AllBlogs();
             $create_blog->blogger_id = Auth::guard('blogger')->id();
             $create_blog->blog_name = $_COOKIE['blog_name'];
-            $create_blog->blog_slug = trim(strtolower(str_replace (' ', '-', $_COOKIE['blog_name'])));
+//            $create_blog->blog_slug = trim(strtolower(str_replace (' ', '-', $_COOKIE['blog_name'])));
             $create_blog->region = $_COOKIE['region'];
             $create_blog->avg_post = $_COOKIE['howpost'];
             $create_blog->categories = unserialize($_COOKIE['categories']);
             $create_blog->save();
 
-            $blogger = Blogger::where('bid', $create_blog->blogger_id)->first();
+            $bid = $create_blog->blogger_id;
+            $blogger = Blogger::where('id', '=' ,$bid)->first();
+            if ($blogger->has_blog != 0)
+            {
+                return redirect(route('blogger.dashboard'))->with('success','Your Blog already Completed');
+            }
             $blogger->has_blog = 1;
             $blogger->save();
 
@@ -67,8 +76,7 @@ class BlogCreationController extends Controller
             setcookie("howpost", "", time()-3600);
             setcookie("categories", "", time()-3600);
 
-            return "Success";
-//            return redirect(route('blogger.blog.create.final'));
+            return redirect(route('blogger.dashboard'))->with('success','Your Blog is Completed');
         }
         return view('blogger.blog_create_process.final');
     }

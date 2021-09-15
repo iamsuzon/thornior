@@ -22,6 +22,8 @@ class CreateAllBlogsTable extends Migration
             $table->string('region');
             $table->string('avg_post');
             $table->json('categories');
+            $table->string('image')->nullable();
+            $table->string('blog_status')->default('published');
             $table->timestamps();
             $table->softDeletes();
         });
@@ -34,6 +36,6 @@ class CreateAllBlogsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('allblogs');
+        Schema::dropIfExists('all_blogs');
     }
 }

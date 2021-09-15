@@ -18,6 +18,11 @@
 
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+
+    @include('layouts.all_styles')
+    <!-- CK Editor 5 -->
+    <link rel="stylesheet" href="{{asset('ckeditor5/build/ckeditor.css')}}">
+    <script src="{{asset('ckeditor5/build/ckeditor.js')}}"></script>
 </head>
 <body>
     <div id="app">

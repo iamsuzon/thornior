@@ -19,7 +19,7 @@ class IsApproved
      */
     public function handle(Request $request, Closure $next)
     {
-        if($this->findUser() == 0)
+        if($this->findUser() == null)
         {
             if (Auth::guard('web')->check() == true)
             {

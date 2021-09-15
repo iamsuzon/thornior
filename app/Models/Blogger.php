@@ -2,7 +2,9 @@
 
 namespace App\Models;
 
+use App\Http\Controllers\Auth\BloggerResetPasswordController;
 use App\Notifications\AdminResetPasswordNotification;
+use App\Notifications\BloggerResetPasswordNotification;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -11,7 +13,7 @@ use Illuminate\Notifications\Notifiable;
 
 class Blogger extends Authenticatable
 {
-    use HasFactory, SoftDeletes, Notifiable;
+    use HasFactory, Notifiable;
 
     protected $guard = 'blogger';
 
@@ -23,8 +25,13 @@ class Blogger extends Authenticatable
         'password', 'remember_token',
     ];
 
+    public function blog()
+    {
+        return $this->hasOne(AllBlogs::class,'blogger_id');
+    }
+
     public function sendPasswordResetNotification($token)
     {
-        $this->notify(new AdminResetPasswordNotification($token));
+        $this->notify(new BloggerResetPasswordNotification($token));
     }
 }

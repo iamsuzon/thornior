@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
 use App\Models\Blogger;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Foundation\Auth\EmailVerificationRequest;
 use Illuminate\Support\Facades\Auth;
@@ -37,5 +38,15 @@ class UserEmailVerificationController extends Controller
             return redirect(route('blogger.dashboard'));
         }
         return view('auth.approve');
+    }
+
+    /* For User Approval Blade */
+    public function userNotApprove()
+    {
+        if (User::where('id',Auth::guard('web')->id())->where('user_approved_at','!=',null)->first() != null)
+        {
+            return redirect(route('user.dashboard'));
+        }
+        return view('auth.user_approve');
     }
 }

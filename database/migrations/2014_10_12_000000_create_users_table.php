@@ -22,6 +22,7 @@ class CreateUsersTable extends Migration
             $table->string('password');
             $table->string('region');
             $table->longText('about')->nullable();
+            $table->string('image')->default('user.jpg');
             $table->rememberToken();
             $table->timestamps();
             $table->softDeletes();

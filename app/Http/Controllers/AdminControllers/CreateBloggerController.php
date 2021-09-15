@@ -6,7 +6,6 @@ use App\Http\Controllers\Controller;
 use App\Mail\BloggerRegMail;
 use App\Models\Blogger;
 use App\Models\BloggerReg;
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
@@ -21,8 +20,8 @@ class CreateBloggerController extends Controller
      */
     public function index()
     {
-        $bloggers = BloggerReg::orderBy('id','DESC')->get();
-        return view('admin.blogger.dashboard',compact('bloggers'));
+//        $bloggers = BloggerReg::orderBy('id','DESC')->get();
+//        return view('admin.blogs',compact('bloggers'));
     }
 
     /**
@@ -48,6 +47,18 @@ class CreateBloggerController extends Controller
             'email' => 'required|email',
         ]);
 
+        if (BloggerReg::where('email',$request->email)->first() != null)
+        {
+            $bloggerReg = BloggerReg::where('email',$request->email)->first();
+            $bloggerReg->token = Str::random(16);
+            if ($bloggerReg->save())
+            {
+                Mail::to($bloggerReg->email)->send(new BloggerRegMail($bloggerReg));
+                $blogger_email = $bloggerReg->email;
+                return view('admin.blogger.link_sent',compact('blogger_email'));
+            }
+        }
+
         $bloggerReg = New BloggerReg();
         $bloggerReg->name = $credentials['name'];
         $bloggerReg->email = $credentials['email'];
@@ -56,9 +67,22 @@ class CreateBloggerController extends Controller
         if ($bloggerReg->save())
         {
             Mail::to($bloggerReg->email)->send(new BloggerRegMail($bloggerReg));
-
-            return back()->with('success','Account creation invitation has sent');
+            $blogger_email = $bloggerReg->email;
+            return view('admin.blogger.link_sent',compact('blogger_email'));
         }
+    }
+
+    public function sentagain($email)
+    {
+        $bloggerReg = BloggerReg::where('email',$email)->first();
+        $bloggerReg->token = Str::random(16);
+        if ($bloggerReg->save())
+        {
+            Mail::to($bloggerReg->email)->send(new BloggerRegMail($bloggerReg));
+            $blogger_email = $bloggerReg->email;
+            return view('admin.blogger.link_sent',compact('blogger_email'));
+        }
+
     }
 
     public function compare($token)

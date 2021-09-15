@@ -24,6 +24,7 @@ class CreateBloggersTable extends Migration
             $table->integer('role_id');
             $table->integer('is_approved')->default(0);
             $table->integer('has_blog')->default(0);
+            $table->string('image')->default('user.jpg');
             $table->rememberToken();
             $table->timestamps();
             $table->softDeletes();

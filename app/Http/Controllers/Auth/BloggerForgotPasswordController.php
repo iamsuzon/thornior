@@ -28,7 +28,7 @@ class BloggerForgotPasswordController extends Controller
 
     protected function broker()
     {
-        return Password::broker('blogger');
+        return Password::broker('bloggers');
     }
 
     public function showLinkRequestForm()

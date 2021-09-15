@@ -67,7 +67,7 @@ return [
     |
     */
 
-    'timezone' => 'Asia/Dhaka',
+    'timezone' => 'Europe/Stockholm',
 
     /*
     |--------------------------------------------------------------------------
@@ -165,7 +165,8 @@ return [
         /*
          * Package Service Providers...
          */
-
+        Intervention\Image\ImageServiceProvider::class,
+        Jorenvh\Share\Providers\ShareServiceProvider::class,
         /*
          * Application Service Providers...
          */
@@ -227,7 +228,8 @@ return [
         'URL' => Illuminate\Support\Facades\URL::class,
         'Validator' => Illuminate\Support\Facades\Validator::class,
         'View' => Illuminate\Support\Facades\View::class,
-
+        'Image' => Intervention\Image\Facades\Image::class,
+        'Share' =>  Jorenvh\Share\ShareFacade::class,
     ],
 
 ];

@@ -10,7 +10,7 @@ use Illuminate\Support\Facades\Lang;
 
 class AdminResetPasswordNotification extends Notification
 {
-    use Queueable;
+//    use Queueable;
 
     public $token;
 

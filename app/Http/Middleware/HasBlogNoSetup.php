@@ -18,7 +18,7 @@ class HasBlogNoSetup
      */
     public function handle(Request $request, Closure $next)
     {
-        if (Blogger::where('bid',Auth::guard('blogger')->id())->where('has_blog',1)->first() == null)
+        if (Blogger::where('id',Auth::guard('blogger')->id())->where('has_blog',1)->first() == null)
         {
             return $next($request);
         }

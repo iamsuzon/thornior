@@ -23,11 +23,15 @@ class CheckInviteToken
             $token = $request->route('token');
             $newBlogger = BloggerReg::where('token', $token)->first();
             $timeNow = Carbon::now();
+            $timeNow = $timeNow->diffForHumans();
             $timeToCompare = $newBlogger->created_at->addHour(1);
+            $timeToCompare = $timeToCompare->diffForHumans();
+
 
             if ($timeNow > $timeToCompare)
             {
-                return 'The Link is Expired, Please Request New Link';
+                return redirect()->route('index');
+//                return 'The Link is Expired, Please Request New Link';
             }
             return $next($request);
         }
